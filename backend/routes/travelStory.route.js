@@ -11,6 +11,10 @@ router.get("/index", authenticateToken, controller.index);
 
 router.post("/upload", upload.single("image"), controller.uploadPost);
 
-router.delete("/delete-image", controller.delete);
+router.delete("/delete-image", controller.deleteImage);
+
+router.put("/edit/:id", authenticateToken, controller.edit);
+
+router.delete("/delete/:id", authenticateToken, controller.delete);
 
 module.exports = router;
