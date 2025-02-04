@@ -3,9 +3,14 @@ const router = express.Router();
 
 const controller = require("../controllers/travelStory.controller");
 const { authenticateToken } = require("../config/utilities");
+const upload = require("../helpers/multer.helper");
 
 router.post("/create", authenticateToken, controller.createPost);
 
 router.get("/index", authenticateToken, controller.index);
+
+router.post("/upload", upload.single("image"), controller.uploadPost);
+
+router.delete("/delete-image", controller.delete);
 
 module.exports = router;
