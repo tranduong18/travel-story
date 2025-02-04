@@ -277,3 +277,28 @@ module.exports.search = async (req, res) => {
     })
   }
 }
+
+// [GET] /travels/filter
+module.exports.filter = async (req, res) => {
+  const { startDate, endDate } = req.query;
+  const { userId } = req.user;
+
+  try {
+    const start = new Date(parseInt(startDate));
+    const end = new Date(parseInt(endDate));
+
+    const filteredStories = await TravelStory.find({
+      userId: userId,
+      visitedDate: { $gte: start, $lte: end }
+    }).sort({ isFavorite: -1 })
+
+    return res.status(200).json({
+      stories: filteredStories
+    })
+  } catch (error) {
+    return res.status(500).json({
+      error: true,
+      message: error.message
+    })
+  }
+}

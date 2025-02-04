@@ -21,4 +21,6 @@ router.put("/update-is-favorite/:id", authenticateToken, controller.updateFavori
 
 router.get("/search", authenticateToken, controller.search);
 
+router.get("/filter", authenticateToken, controller.filter);
+
 module.exports = router;
