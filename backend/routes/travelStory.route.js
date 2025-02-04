@@ -19,4 +19,6 @@ router.delete("/delete/:id", authenticateToken, controller.delete);
 
 router.put("/update-is-favorite/:id", authenticateToken, controller.updateFavorite);
 
+router.get("/search", authenticateToken, controller.search);
+
 module.exports = router;
