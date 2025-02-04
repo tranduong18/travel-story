@@ -208,3 +208,39 @@ module.exports.delete = async (req, res) => {
     })
   }
 }
+
+// [PUT] /travels/update-is-favorite/:id
+module.exports.updateFavorite = async (req, res) => {
+  const { id } = req.params;
+  const { isFavorite } = req.body;
+  const { userId } = req.user;
+
+  try {
+    const travelStory = await TravelStory.findOne({
+      _id: id,
+      userId: userId
+    });
+
+    if(!travelStory){
+      return res.status(404).json({
+        error: true,
+        message: "Travel story not found"
+      })
+    }
+
+    travelStory.isFavorite = isFavorite;
+
+    await travelStory.save();
+
+    return res.status(200).json({
+      story: travelStory,
+      message: "Update successfully"
+    })
+
+  } catch (error) {
+    return res.status(500).json({
+      error: true,
+      message: error.message
+    })
+  }
+}
